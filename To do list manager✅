@@ -1,0 +1,76 @@
+# 📋 To-Do List Manager (Beginner Version - List Only)
+
+tasks = []
+
+def add_task():
+    task = input("Enter a new task: ")
+    tasks.append(task)
+    print(f'"{task}" has been added.')
+
+def show_tasks():
+    if not tasks:
+        print("No tasks available.")
+    else:
+        print("\nYour Tasks:")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task}")
+
+def mark_done():
+    show_tasks()
+    task_name = input("Enter the task exactly as written to mark as done: ")
+    for i in range(len(tasks)):
+        if tasks[i] == task_name and not tasks[i].startswith("✅"):
+            tasks[i] = "✅ " + tasks[i]
+            print(f'"{task_name}" marked as done.')
+            return
+    print("Task not found or already marked.")
+
+def delete_task():
+    show_tasks()
+    try:
+        index = int(input("Enter task number to delete: ")) - 1
+        if 0 <= index < len(tasks):
+            removed = tasks.pop(index)
+            print(f'"{removed}" has been deleted.')
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+def show_pending_tasks():
+    found = False
+    print("\nPending Tasks:")
+    for i, task in enumerate(tasks, 1):
+        if not task.startswith("✅"):
+            print(f"{i}. {task}")
+            found = True
+    if not found:
+        print("No pending tasks.")
+
+# Main Loop
+while True:
+    print("\n📌 Menu:")
+    print("1. Add Task")
+    print("2. Show All Tasks")
+    print("3. Mark Task as Done")
+    print("4. Delete Task")
+    print("5. Show Pending Tasks")
+    print("6. Exit")
+
+    choice = input("Choose an option (1-6): ")
+
+    if choice == "1":
+        add_task()
+    elif choice == "2":
+        show_tasks()
+    elif choice == "3":
+        mark_done()
+    elif choice == "4":
+        delete_task()
+    elif choice == "5":
+        show_pending_tasks()
+    elif choice == "6":
+        print("Goodbye! 👋")
+        break
+    else:
+        print("Invalid option. Try again.")
